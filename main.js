@@ -19,7 +19,13 @@ function updateCountdown() {
   } else {
     countdownElement.style.display = 'none';
     if (!inside) {
-      firstElement.style.display = 'block';
+        document.getElementById('first').innerHTML = '<button type="button" class="btn btn-dark" id="enter">Click here, hosomaki :)</button>';
+        document.getElementById('message').innerHTML = '<h1 class="pb-3">Төрсөн өдрийн мэнд!!</h1>' +
+        '<h3 class="pb-2">You have a flight today at 15:45 and a date at night, get ready ;)</h3>' +
+        '<h3 class="pb-5">Look back! :*</h3>' +
+        '<div class="embed-responsive embed-responsive-21by9">' +
+        '    <div class="embed-responsive-item" id="player"></div>' +
+        '</div>';
     }
   }
 }
