@@ -4,6 +4,7 @@ const firstElement = document.getElementById('first');
 const messageElement = document.getElementById('message');
 
 var inside = false;
+var first = true;
 
 function updateCountdown() {
   const now = new Date();
@@ -18,7 +19,8 @@ function updateCountdown() {
     countdownElement.innerText = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
   } else {
     countdownElement.style.display = 'none';
-    if (!inside) {
+    if (!inside && first) {
+        firstElement.style.display = 'block';
         document.getElementById('first').innerHTML = '<button type="button" class="btn btn-dark" id="enter">Click here, hosomaki :)</button>';
         document.getElementById('message').innerHTML = '<h1 class="pb-3">Төрсөн өдрийн мэнд!!</h1>' +
         '<h3 class="pb-2">You have a flight today at 15:45 and a date at night, get ready ;)</h3>' +
@@ -26,6 +28,25 @@ function updateCountdown() {
         '<div class="embed-responsive embed-responsive-21by9">' +
         '    <div class="embed-responsive-item" id="player"></div>' +
         '</div>';
+        first = false;
+        player = new YT.Player('player', {
+            videoId: 'apr2JCdpTbQ',
+            width: '100%',
+            events: {
+            'onReady': onPlayerReady,
+            }
+        });
+        document.getElementById('enter').addEventListener('click', function() {
+            firstElement.style.display = 'none';
+            messageElement.style.display = 'block';
+            inside = true;
+            // create particles
+            createParticles();
+            // Unmute the video and start playing when the button is clicked.
+            player.unMute();
+            player.playVideo();
+        });
+        
     }
   }
 }
@@ -33,13 +54,6 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      videoId: 'apr2JCdpTbQ',
-      width: '100%',
-      events: {
-        'onReady': onPlayerReady,
-      }
-    });
 }
 
 function onPlayerReady(event) {
@@ -153,13 +167,3 @@ function createParticles() {
   );
 }
 
-document.getElementById('enter').addEventListener('click', function() {
-    firstElement.style.display = 'none';
-    messageElement.style.display = 'block';
-    inside = true;
-    // create particles
-    createParticles();
-    // Unmute the video and start playing when the button is clicked.
-    player.unMute();
-    player.playVideo();
-});
